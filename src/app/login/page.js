@@ -1,7 +1,7 @@
 "use client"
 import { login } from "@/actions/server"
 import { useRef } from "react"
-export default function page()
+export default function Login()
 {
     const formRef = useRef(null)
     return (

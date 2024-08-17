@@ -133,25 +133,7 @@ export const products = [
       "Target Audience: Men & Women"
     ]
   },
-  {
-    id: 8,
-    type: "medicine",
-    name: "Paracetamol",
-    quantity: "pack of 12 tablets",
-    price: 20,
-    discount: "11% off",
-    url: "https://www.netmeds.com/images/product-v1/600x600/301205/pacimol_650mg_tablet_15s_652235_1_0.jpg",
-    tag: ["painkiller", "All"],
-    detail: "99F 650 - Strip of 12 Tablets",
-    brand: "Paracetamol",
-    star: [1, 1, 1, 1, 0],
-    rate: 80,
-    about: [
-      "Dosage: As directed by the Physician",
-      "Storage Instructions: Store protected from light and moisture at a temperature not exceeding 30°C",
-      "This product will have minimum 3 months expiry at the time of order dispatch"
-    ]
-  },
+  
   {
     id: 9,
     type: "medicine",
