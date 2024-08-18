@@ -1,13 +1,21 @@
+import { getCart } from '@/actions/server';
 import { createContext, useContext, useState, useEffect } from 'react';
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
     const [cartDetail, setCartDetail] = useState([]);
-
+   
+    
     useEffect(() => {
-        const storedCart = JSON.parse(localStorage.getItem("cartItem") || "[]");
-        setCartDetail(storedCart);
+       getCart().then((data)=>{
+        if(!data)
+        {
+            setCartDetail([])
+        }
+         setCartDetail(data)
+       })
+        
     }, []);
 
     return (

@@ -3,23 +3,32 @@ import { products } from "@/product"
 import { faCheckCircle } from "@fortawesome/free-solid-svg-icons"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import Link from "next/link"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import ReactStars from "react-stars"
 import { motion, useAnimate, useAnimation } from "framer-motion"
-import { addItemToCart } from "@/actions/server"
 import { useCart } from "@/context/CartContext"
+import { addItemToCart, getCart } from "@/actions/server"
 
 export default function ProductBox({ item }) {
     const animation = useAnimation()
-    const [isInCart, setIsInCart] = useState(JSON.parse(localStorage.getItem("cartItem")|| "[]"))
     const {cartDetail , setCartDetail} = useCart()
 
-    
-const addItemToCart = (id)=>{
-    let arr = JSON.parse(localStorage.getItem("cartItem")|| "[]");
-    arr.push({id:id,quantity:1});
 
-    localStorage.setItem("cartItem",JSON.stringify(arr));
+const addItem = async (id)=>{
+    try{
+        await addItemToCart(id)
+    }
+    catch(e){
+        alert(e)
+    }
+
+    
+}
+const helper= async (id)=>{
+    addItem(id)
+    
+    let cartData = await getCart();
+    setCartDetail(cartData)
 }
     const handleAddToCart = async(id) => {
         animation.start({
@@ -28,10 +37,9 @@ const addItemToCart = (id)=>{
 
             transition: { duration: 0.4, ease: 'easeInOut' }
         })
-        setTimeout(()=> {
-            helper(id);
-            setCartDetail(JSON.parse(localStorage.getItem("cartItem")|| "[]"))
-            setIsInCart(JSON.parse(localStorage.getItem("cartItem")|| "[]"))
+        
+            await helper(id);
+          
             animation.start({
                 width: "100%",
                 position: "relative",
@@ -39,15 +47,8 @@ const addItemToCart = (id)=>{
                 opacity: [0, 1],
                 transition: { duration: 0.3, ease: 'easeInOut' }
             })
-        }, 600)
-
-        const helper= (id)=>{
-            addItemToCart(id)
         }
-       
 
-
-    }
     return (
         <div href="/" className="block p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200  w-84 bg-white">
             <img src={item.url} alt={item.name} className="w-full h-auto rounded-md " />
@@ -67,8 +68,8 @@ const addItemToCart = (id)=>{
                     />
                 </div>
                 <div className="mt-2 mb-2 flex justify-center">
-                    <motion.button className="w-full h-10 border border-black pt-1 pb-1 overflow-hidden disabled:border-0 " disabled={isInCart.find(a => a.id == item.id) != null} onClick={() => handleAddToCart(item.id)} animate={animation}>
-                        {isInCart.find(a => a.id == item.id) != null ? <span><FontAwesomeIcon icon={faCheckCircle} className="text-green-600" /> Added</span> : <span>Add to cart </span>}
+                    <motion.button className="w-full h-10 border border-black pt-1 pb-1 overflow-hidden disabled:border-0 " disabled={cartDetail.find(a => a.id == item.id) != null} onClick={() => handleAddToCart(item.id)} animate={animation}>
+                        {cartDetail.find(a => a.id == item.id) != null ? <span><FontAwesomeIcon icon={faCheckCircle} className="text-green-600" /> Added</span> : <span>Add to cart </span>}
                     </motion.button>
                 </div>
             </div>

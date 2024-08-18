@@ -7,7 +7,7 @@ import { products } from "@/product";
 import Link from "next/link";
 import emptyCart from "../../../public/emptyCart.png";
 import Image from "next/image";
-import { getSession } from "@/actions/server";
+import { decreaseQuantity, getSession, increaseQuantity, removeItem } from "@/actions/server";
 import { useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 
@@ -22,13 +22,14 @@ export default function Cart() {
 
 
   const fetcher = () => {
-    let list = JSON.parse(localStorage.getItem("cartItem") || "[]");
-    setProd(list);
-
-    const updatedCart = list
-      .map((element) => products.find((a) => a.id === element.id))
-      .filter((item) => item !== undefined);
-
+    console.log("running fetch");
+    
+    let arr =  cartDetail
+    setProd(arr)
+    const updatedCart = arr
+    .map((element) => products.find((a) => a.id === element.id))
+    .filter((item) => item !== undefined);
+    
     setCart(updatedCart);
   };
 
@@ -38,9 +39,9 @@ export default function Cart() {
         router.push("/login") 
       }
     })
-
     fetcher();
-  }, []);
+    
+  }, [cartDetail]);
 
   useEffect(() => {
     let getPrice = 0;
@@ -55,29 +56,36 @@ export default function Cart() {
 
   const handleIncrease = (itemId, quantity) => {
     if (quantity >= 10) return;
-    const updatedCart = prod.map((item) => {
-      if (item.id === itemId) item.quantity += 1;
-      return item;
-    });
-    localStorage.setItem("cartItem", JSON.stringify(updatedCart));
-    fetcher();
+    increaseQuantity(itemId).then((data)=>{
+      if(data.length == 0)
+      {
+        alert("something went wrong")
+        return
+      }
+      
+      setCartDetail(data)
+    })
+    // fetcher()
   };
 
   const handleDecrease = (itemId, quantity) => {
     if (quantity <= 1) return;
-    const updatedCart = prod.map((item) => {
-      if (item.id === itemId) item.quantity -= 1;
-      return item;
-    });
-    localStorage.setItem("cartItem", JSON.stringify(updatedCart));
-    fetcher();
+   
+    decreaseQuantity(itemId).then((data)=>{
+      if(data.length == 0)
+      {
+        alert("something went wrong")
+        return
+      }
+      
+      setCartDetail(data)
+    })
   };
 
   const handleRemove = (itemId) => {
-    const updatedCart = prod.filter((item) => itemId !== item.id)
-    localStorage.setItem("cartItem", JSON.stringify(updatedCart))
-    setCartDetail(updatedCart)
-    fetcher()
+    removeItem(itemId).then((data)=>{
+      setCartDetail(data)
+    })
   }
 
   if (cartProduct.length === 0) {

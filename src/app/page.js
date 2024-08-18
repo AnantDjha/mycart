@@ -7,20 +7,24 @@ import { products } from "@/product";
 import ProductBox from "./components/ProductBox";
 import NavBar from "./components/NavBar";
 import { createContext, useContext, useEffect, useState } from "react";
-import { getSession } from "@/actions/server";
-import { CartProvider } from "@/context/CartContext";
+import { getCart, getSession } from "@/actions/server";
+import { CartProvider, useCart } from "@/context/CartContext";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   
   const router = useRouter()
+  const {cartDetail , setCartDetail} = useCart()
 
   useEffect(() => {
     getSession().then((res) => {
+      
       if (!res) {
         router.push("/login") 
       }
+      getCart().then((data)=>{setCartDetail(data)})
     })
+    
 
   }, [])
 
