@@ -68,8 +68,8 @@ const helper= async (id)=>{
                     />
                 </div>
                 <div className="mt-2 mb-2 flex justify-center">
-                    <motion.button className="w-full h-10 border border-black pt-1 pb-1 overflow-hidden disabled:border-0 " disabled={cartDetail.find(a => a.id == item.id) != null} onClick={() => handleAddToCart(item.id)} animate={animation}>
-                        {cartDetail.find(a => a.id == item.id) != null ? <span><FontAwesomeIcon icon={faCheckCircle} className="text-green-600" /> Added</span> : <span>Add to cart </span>}
+                    <motion.button className="w-full h-10 border text-white rounded-lg border-black pt-1 pb-1 overflow-hidden bg-black disabled:border-0 disabled:bg-white disabled:text-black " disabled={cartDetail.find(a => a.id == item.id) != null} onClick={() => handleAddToCart(item.id)} animate={animation}>
+                        {cartDetail.find(a => a.id == item.id) != null  ? <span><FontAwesomeIcon icon={faCheckCircle} className="text-green-600" /> Added</span> : <span>Add to cart </span>}
                     </motion.button>
                 </div>
             </div>

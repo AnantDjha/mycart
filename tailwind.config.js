@@ -18,6 +18,9 @@ module.exports = {
       },
       height:{
         "getFull":"85vh"
+      },
+      colors:{
+        "hash":"#32aeb1"
       }
     },
   },

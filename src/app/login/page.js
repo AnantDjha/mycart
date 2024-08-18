@@ -5,7 +5,7 @@ export default function Login()
 {
     const formRef = useRef(null)
     return (
-        <div className="flex justify-center items-center h-getFull bg-gray-100">
+        <div className="flex justify-center items-center h-screen bg-gray-100">
         <form
           ref={formRef}
           action={(e)=>{login(e); formRef.current.reset()}}

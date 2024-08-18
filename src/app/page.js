@@ -47,15 +47,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Filter and Sort Buttons */}
-          <div className="flex justify-between mt-6">
-            <button className="flex items-center gap-2 px-4 py-2 border-2 border-gray-300 rounded-lg bg-white shadow-sm hover:bg-gray-100">
-              <span className="w-4"><FontAwesomeIcon icon={faFilter} /></span> Filter
-            </button>
-            <button className="flex items-center gap-2 px-4 py-2 border-2 border-gray-300 rounded-lg bg-white shadow-sm hover:bg-gray-100">
-              <span className="w-3"><FontAwesomeIcon icon={faSort} /></span> Sort
-            </button>
-          </div>
+        
 
           {/* Product Grid */}
           <div className="mt-6 grid  grid-cols-1 gap-2 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
