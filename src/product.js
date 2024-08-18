@@ -244,7 +244,7 @@ export const products = [
   {
     id: 13,
     type: "medicine",
-    name: "Saridon Advance Tablets",
+    name: "Saridon Tablets",
     quantity: "pack of 10's",
     price: 44,
     discount: "10% off",
