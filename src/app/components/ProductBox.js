@@ -8,6 +8,7 @@ import ReactStars from "react-stars"
 import { motion, useAnimate, useAnimation } from "framer-motion"
 import { useCart } from "@/context/CartContext"
 import { addItemToCart, getCart } from "@/actions/server"
+import { useAnimation } from "framer-motion"
 
 export default function ProductBox({ item }) {
     const animation = useAnimation()
